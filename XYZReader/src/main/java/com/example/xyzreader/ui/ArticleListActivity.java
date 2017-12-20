@@ -9,6 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -47,6 +48,7 @@ import java.util.GregorianCalendar;
 public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
+    public static final String KEY_SCROLL_STATE = "recyclerScroll";
     private static final String TAG = ArticleListActivity.class.toString();
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -58,6 +60,8 @@ public class ArticleListActivity extends AppCompatActivity implements
     // Most time functions can only handle 1902 - 2037
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
     private boolean mIsRefreshing = false;
+    private StaggeredGridLayoutManager sglm;
+    private Parcelable restoredState;
     private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -100,6 +104,9 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         if (savedInstanceState == null) {
             refresh();
+        } else {
+            restoredState = savedInstanceState.getParcelable(KEY_SCROLL_STATE);
+            sglm.onRestoreInstanceState(restoredState);
         }
     }
 
@@ -121,6 +128,12 @@ public class ArticleListActivity extends AppCompatActivity implements
         unregisterReceiver(mRefreshingReceiver);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(KEY_SCROLL_STATE, sglm.onSaveInstanceState());
+    }
+
     private void updateRefreshingUI() {
         mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
     }
@@ -136,7 +149,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
-        StaggeredGridLayoutManager sglm =
+        sglm =
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sglm);
     }
@@ -160,6 +173,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
+
         private Cursor mCursor;
 
         public Adapter(Cursor cursor) {
