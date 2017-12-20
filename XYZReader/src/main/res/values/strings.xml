@@ -8,5 +8,7 @@
     <string name="action_share">Share</string>
 
     <string name="up">Up</string>
+    <string name="transition_image_view">imageTransition</string>
+    <string name="network_error">Not connected to Internet !!</string>
 
 </resources>

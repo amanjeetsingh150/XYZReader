@@ -155,6 +155,8 @@ public class ArticleDetailFragment extends Fragment implements
         return mRootView;
     }
 
+
+
     private void updateStatusBar() {
         int color = 0;
         if (mPhotoView != null && mTopInset != 0 && mScrollY > 0) {
