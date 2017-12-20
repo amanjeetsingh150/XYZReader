@@ -106,7 +106,6 @@ public class ArticleListActivity extends AppCompatActivity implements
             refresh();
         } else {
             restoredState = savedInstanceState.getParcelable(KEY_SCROLL_STATE);
-            sglm.onRestoreInstanceState(restoredState);
         }
     }
 
@@ -126,6 +125,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mRefreshingReceiver);
+        unregisterReceiver(mNotOnlineReceiver);
     }
 
     @Override
@@ -149,8 +149,10 @@ public class ArticleListActivity extends AppCompatActivity implements
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
-        sglm =
-                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+        sglm = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+        if (restoredState != null) {
+            sglm.onRestoreInstanceState(restoredState);
+        }
         mRecyclerView.setLayoutManager(sglm);
     }
 

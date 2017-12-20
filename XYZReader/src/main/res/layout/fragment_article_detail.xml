@@ -23,7 +23,7 @@
                     android:id="@+id/photo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:transitionName="@string/transition_image_view"/>
+                    android:contentDescription="@string/content_description_article_detail"/>
 
                 <View
                     android:layout_width="match_parent"
