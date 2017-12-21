@@ -10,6 +10,7 @@
     android:clickable="true"
     android:elevation="@dimen/card_view_default_elevation"
     android:focusable="true"
+    app:cardElevation="@dimen/card_view_default_elevation"
     android:foreground="?selectableItemBackground">
 
     <LinearLayout
@@ -23,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/photo_placeholder"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:transitionName="@string/transition_image_view" />
 
         <TextView
