@@ -24,6 +24,7 @@
                     android:scaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#607D8B"
                     android:contentDescription="@string/content_description_article_detail"/>
 
                 <View
