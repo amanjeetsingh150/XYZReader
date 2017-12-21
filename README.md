@@ -5,4 +5,5 @@ XYZ Reader: A mock RSS feed reader featuring banner photos and headlines.
 
 Screenshots
 
-<img src="Screenshot_1513854055.png" height="400px"/> &nbsp;&nbsp;<img src="Screenshot_1513854098.png" height="400px"/>
+<image src="Screenshot_1513854055.png" height="400px"/> &nbsp;&nbsp;<img src="Screenshot_1513854098.png" height="400px"/>
+ 
